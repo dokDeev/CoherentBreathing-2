@@ -1,17 +1,17 @@
-# Когерентное дыхание 5:5 — лендинг
+# Когерентное дыхание с аудио
 
-Файлы сайта:
-- **index.html**
-- **styles.css**
-- **script.js**
+Файлы:
+- index.html (страница с тегами audio)
+- styles.css (стили)
+- script.js (метроном + звук)
+- inhale.wav (звук для вдоха)
+- exhale.wav (звук для выдоха)
 
-## Как загрузить в репозиторий
-1. Скачайте этот архив и распакуйте его.  
-2. В папке будут 4 файла: `index.html`, `styles.css`, `script.js`, `README.md`.  
-3. Скопируйте их в папку вашего репозитория (на компьютере через GitHub Desktop).  
-4. В GitHub Desktop появятся изменения. Сделайте Commit и Push.  
-5. На GitHub → Settings → Pages → выберите ветку `main` и папку `/ (root)`.  
-6. Через минуту сайт откроется по адресу:  
-   ```
-   https://ВАШ_логин.github.io/ИМЯ_РЕПОЗИТОРИЯ/
-   ```
+## Как загрузить в GitHub
+1. Скачайте и распакуйте архив.
+2. Зайдите в свой репозиторий на GitHub.
+3. Нажмите Add file → Upload files.
+4. Перетащите все файлы из папки (index.html, styles.css, script.js, inhale.wav, exhale.wav, README.md).
+5. Commit changes.
+6. В Settings → Pages → выберите main / (root) → Save.
+7. Через 1–2 минуты сайт обновится, и на вдох/выдох будет звук.

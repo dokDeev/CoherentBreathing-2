@@ -1,21 +1,10 @@
-:root{
-  --bg: #0b1220;
-  --text: #e5e7eb;
-  --muted: #94a3b8;
-  --primary: #0ea5e9;
-  --accent: #22d3ee;
+.breath-circle{
+  width:200px;
+  height:200px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(14,165,233,.5),rgba(14,165,233,.1));
+  margin:20px auto;
+  transform:scale(.7);
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);}
-.container{max-width:900px;margin:auto;padding:0 20px;}
-.site-header{background:#111;position:sticky;top:0;padding:10px 0;}
-.site-header .nav{display:flex;justify-content:space-between;align-items:center;}
-.site-header nav a{color:var(--muted);margin-left:15px;text-decoration:none;}
-.hero{padding:60px 0;text-align:center;}
-.btn{background:linear-gradient(135deg,var(--primary),var(--accent));padding:10px 16px;border-radius:8px;color:#000;text-decoration:none;font-weight:bold;}
-.section{padding:50px 0;}
-.practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-@media(max-width:768px){.practice-grid{grid-template-columns:1fr;}}
-.breath-circle{width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,233,.5),rgba(14,165,233,.1));margin:auto;transform:scale(.7);}
-.site-footer{text-align:center;padding:20px;color:var(--muted);font-size:14px;}
+button{background:#0ea5e9;border:none;color:#000;padding:10px 20px;border-radius:6px;cursor:pointer;}
+body{font-family:sans-serif;text-align:center;background:#0b1220;color:#fff;}

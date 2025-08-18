@@ -3,89 +3,50 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Когерентное дыхание 5:5 — простая практика для стабилизации нервной системы." />
-  <meta name="theme-color" content="#0ea5e9" />
   <title>Когерентное дыхание 5:5</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="site-header">
-    <div class="container nav">
-      <a class="brand" href="#top">Когерентное дыхание</a>
-      <nav>
-        <a href="#why">Зачем</a>
-        <a href="#practice">Практика&nbsp;5:5</a>
-        <a href="#checklist">Чек-лист</a>
-      </nav>
-    </div>
+    <h1>Когерентное дыхание 5:5</h1>
+    <nav>
+      <a href="#why">Зачем</a> |
+      <a href="#practice">Практика</a> |
+      <a href="#checklist">Чек-лист</a>
+    </nav>
   </header>
 
-  <main id="top">
-    <section class="hero">
-      <div class="container hero-inner">
-        <h1>Синхронизация дыхания и сердца — 5&nbsp;вдохов в минуту</h1>
-        <p class="lead">
-          Простая техника 5:5: вдох&nbsp;— 5&nbsp;сек, выдох&nbsp;— 5&nbsp;сек. Начните с 3–5 минут и наблюдайте, как выравнивается ритм.
-        </p>
-        <div class="actions">
-          <a class="btn" href="#practice">Начать практику</a>
-          <a class="link" href="#why">Зачем это работает?</a>
-        </div>
-      </div>
+  <main>
+    <section id="why">
+      <h2>Зачем</h2>
+      <p>Техника 5:5 улучшает вариабельность сердечного ритма, снижает стресс и помогает расслабиться.</p>
     </section>
 
-    <section id="why" class="section">
-      <div class="container">
-        <h2>Зачем</h2>
-        <ul class="bullets">
-          <li><strong>Вегетативный баланс.</strong> Стимуляция барорефлекса и улучшение вариабельности сердечного ритма.</li>
-          <li><strong>Стресс-ответ.</strong> Мягкое смещение к парасимпатическому тону—заметное снижение напряжения.</li>
-          <li><strong>Сон и восстановление.</strong> Ровное дыхание перед сном улучшает засыпание и глубину сна.</li>
-        </ul>
-      </div>
+    <section id="practice">
+      <h2>Практика</h2>
+      <p>Нажмите «Старт» и следите за кругом. Вдох — когда он расширяется, выдох — когда сжимается.</p>
+      <button id="toggleBtn">Старт</button>
+      <span id="phaseLabel">Готовы</span>
+      <div id="breathCircle" class="breath-circle"></div>
     </section>
 
-    <section id="practice" class="section practice">
-      <div class="container practice-grid">
-        <div class="practice-left">
-          <h2>Практика 5:5</h2>
-          <p>Следуйте за метрономом: круг расширяется на вдохе и мягко сжимается на выдохе. Нажмите «Старт», дышите спокойно через нос.</p>
-          <div class="controls">
-            <button id="toggleBtn" class="btn">Старт</button>
-            <span id="phaseLabel" class="phase" aria-live="polite">Готовы</span>
-            <span class="tempo">Режим: 5&nbsp;сек вдох / 5&nbsp;сек выдох</span>
-          </div>
-        </div>
-        <div class="practice-right">
-          <div class="circle-wrap">
-            <div id="breathCircle" class="breath-circle" role="img" aria-label="Метроном дыхания"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="checklist" class="section">
-      <div class="container">
-        <h2>Чек-лист</h2>
-        <ol class="checklist">
-          <li>Сядьте устойчиво, плечи свободны, подбородок чуть втянут.</li>
-          <li>Дышите через нос, мягко подключая диафрагму.</li>
-          <li>Смотрите периферическим зрением, не «упирайтесь» взглядом.</li>
-          <li>3–5 минут утром и вечером. Через неделю можно 10 минут.</li>
-          <li>Стоп, если головокружение: уменьшите амплитуду и темп внимания.</li>
-        </ol>
-      </div>
+    <section id="checklist">
+      <h2>Чек-лист</h2>
+      <ul>
+        <li>Сидите прямо, плечи расслаблены.</li>
+        <li>Дышите через нос.</li>
+        <li>Начинайте с 3–5 минут.</li>
+      </ul>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <p>© <span id="year"></span> Когерентное дыхание • Мини-лендинг на чистом HTML/CSS/JS</p>
-    </div>
+  <footer>
+    <p>© <span id="year"></span> Когерентное дыхание</p>
   </footer>
+
+  <!-- Аудио -->
+  <audio id="soundInhale" src="inhale.wav" preload="auto"></audio>
+  <audio id="soundExhale" src="exhale.wav" preload="auto"></audio>
 
   <script src="script.js"></script>
 </body>
