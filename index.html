@@ -10,6 +10,7 @@
   <header class="site-header">
     <h1>Когерентное дыхание 5:5</h1>
     <nav>
+      <a href="#what">Что это</a> |
       <a href="#why">Зачем</a> |
       <a href="#practice">Практика</a> |
       <a href="#checklist">Чек-лист</a>
@@ -17,25 +18,56 @@
   </header>
 
   <main>
+    <section id="what">
+      <h2>Что это</h2>
+      <div class="illustration">
+        <!-- SVG lungs -->
+        <svg id="lungs" xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3v18"/>
+          <path d="M6 9c-2 0-4 2-4 6 0 3 2 6 4 6s4-3 4-6c0-4-2-6-4-6z"/>
+          <path d="M18 9c2 0 4 2 4 6 0 3-2 6-4 6s-4-3-4-6c0-4 2-6 4-6z"/>
+        </svg>
+        <!-- SVG heart -->
+        <svg id="heart" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
+        </svg>
+      </div>
+      <p><strong>Когерентное дыхание</strong> – это дыхание 5–6 циклов в минуту, где вдох равен выдоху. Такой ритм помогает уравновесить симпатическую и парасимпатическую систему и восстановить эмоциональный баланс.</p>
+    </section>
+
     <section id="why">
       <h2>Зачем</h2>
-      <p>Техника 5:5 улучшает вариабельность сердечного ритма, снижает стресс и помогает расслабиться.</p>
+      <p>Когерентное дыхание снижает стресс, улучшает вариабельность сердечного ритма и помогает расслабиться.</p>
     </section>
 
     <section id="practice">
       <h2>Практика</h2>
-      <p>Нажмите «Старт» и следите за кругом. Вдох — когда он расширяется, выдох — когда сжимается.</p>
-      <button id="toggleBtn">Старт</button>
-      <span id="phaseLabel">Готовы</span>
-      <div id="breathCircle" class="breath-circle"></div>
+      <div class="practice-grid">
+        <div>
+          <p>Сидим прямо, плечи расслаблены. Дышим животом. Следуйте за кругом и звуком.</p>
+          <button id="toggleBtn">Старт</button>
+          <span id="phaseLabel">Готовы</span>
+          <div id="breathCircle" class="breath-circle"></div>
+        </div>
+        <div>
+          <!-- SVG sitting person -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="4" r="2"/>
+            <path d="M10 22v-6h4v6"/>
+            <path d="M6 8l6 4 6-4"/>
+          </svg>
+        </div>
+      </div>
     </section>
 
     <section id="checklist">
       <h2>Чек-лист</h2>
       <ul>
-        <li>Сидите прямо, плечи расслаблены.</li>
-        <li>Дышите через нос.</li>
-        <li>Начинайте с 3–5 минут.</li>
+        <li>Сидим прямо, плечи расслаблены</li>
+        <li>Ноги стоят на полу параллельно</li>
+        <li>Руки лежат на коленях</li>
+        <li>Глаза опущены или закрыты</li>
+        <li>Дышим животом: живот надуваем – сдуваем</li>
       </ul>
     </section>
   </main>
@@ -44,7 +76,6 @@
     <p>© <span id="year"></span> Когерентное дыхание</p>
   </footer>
 
-  <!-- Аудио -->
   <audio id="soundInhale" src="inhale.wav" preload="auto"></audio>
   <audio id="soundExhale" src="exhale.wav" preload="auto"></audio>
 

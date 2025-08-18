@@ -7,6 +7,8 @@
 
   const soundInhale=document.getElementById('soundInhale');
   const soundExhale=document.getElementById('soundExhale');
+  const lungs=document.getElementById('lungs');
+  const heart=document.getElementById('heart');
 
   let running=false,phase='inhale',start=0,raf;
   const D_IN=5000,D_EX=5000,MIN=0.7,MAX=1.0;
@@ -15,8 +17,8 @@
   function setPhase(p){
     phase=p;start=performance.now();
     label.textContent=(p==='inhale'?'Вдох':'Выдох');
-    if(p==='inhale'){ soundInhale.currentTime=0; soundInhale.play(); }
-    else { soundExhale.currentTime=0; soundExhale.play(); }
+    if(p==='inhale'){soundInhale.currentTime=0;soundInhale.play();}
+    else{soundExhale.currentTime=0;soundExhale.play();}
   }
   function frame(now){
     const dur=(phase==='inhale'?D_IN:D_EX);
@@ -24,6 +26,8 @@
     const e=ease(t);
     const s=(phase==='inhale'?MIN+(MAX-MIN)*e:MAX-(MAX-MIN)*e);
     circle.style.transform=`scale(${s})`;
+    if(lungs) lungs.style.transform=`scale(${s})`;
+    if(heart) heart.style.transform=`scale(${0.9+0.1*e})`;
     if(t>=1) setPhase(phase==='inhale'?'exhale':'inhale');
     if(running) raf=requestAnimationFrame(frame);
   }
