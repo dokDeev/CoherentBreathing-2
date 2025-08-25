@@ -1,50 +1,195 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Практика Когерентного Дыхания</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <title>Когерентное дыхание 5:5 — тренажёр</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Визуальный тренажёр когерентного дыхания: 5-5, 4-6 и box 4-4-4-4. Инструкция, чек-лист, мягкая анимация круга.">
+  <link rel="canonical" href="https://dokdeev.github.io/CoherentBreathing-2/">
+  <meta name="theme-color" content="#e6f3ff">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Когерентное дыхание 5:5 — тренажёр">
+  <meta property="og:description" content="Анимированный тренажёр дыхания: 5-5, 4-6 и box 4-4-4-4. Инструкции и чек-лист.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dokdeev.github.io/CoherentBreathing-2/">
+  <meta property="og:image" content="https://dokdeev.github.io/CoherentBreathing-2/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ru_RU">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Встроенный фавикон (без файла) -->
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><radialGradient id="g" cx="32" cy="28" r="28"><stop offset="0" stop-color="%23fff"/><stop offset="1" stop-color="%230ea5e9"/></radialGradient></defs><circle cx="32" cy="32" r="24" fill="url(%23g)"/></svg>'>
+
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"Когерентное дыхание 5:5 — тренажёр",
+    "url":"https://dokdeev.github.io/CoherentBreathing-2/",
+    "description":"Визуальный тренажёр когерентного дыхания: 5-5, 4-6 и box 4-4-4-4. Без внешних зависимостей.",
+    "inLanguage":"ru",
+    "publisher":{"@type":"Organization","name":"Доктор Деев"}
+  }
+  </script>
 </head>
 <body>
+  <div class="wrap">
+    <header class="hero" role="banner">
+      <div class="kicker">ПРАКТИКА • ВНС • АНТИСТРЕСС</div>
+      <h1>Когерентное дыхание 5:5 — тренажёр прямо на странице</h1>
+      <p class="sub">Мягкая визуализация, ритм 5-5 по умолчанию и две альтернативы (4-6, box 4-4-4-4).
+        Нажмите «Старт» и следуйте кругу: расширение — вдох, сужение — выдох. Для работы и восстановления в течение дня.</p>
+      <div class="cta">
+        <span class="pill" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
+          </svg> ВНС-дружественно
+        </span>
+        <span class="pill" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12c3 0 3-7 6-7s3 14 6 14 3-7 6-7"/>
+          </svg> Ровная синусоида
+        </span>
+        <span class="badge">Без внешних скриптов • Быстрая загрузка</span>
+      </div>
+    </header>
 
-    <main class="container">
-        <div class="breathing-circle" id="circle"></div>
-        <p class="status" id="status">Приготовьтесь...</p>
-        <div class="instructions">
-            <h1>Найдите свой ритм</h1>
-            <p>Следуйте за кругом, чтобы синхронизировать ваше дыхание. <br>Это поможет успокоить ум и тело.</p>
+    <!-- Липкая навигация -->
+    <nav class="topnav" aria-label="Навигация по разделам">
+      <a href="#coach">Тренажёр</a>
+      <a href="#inst">Инструкция</a>
+      <a href="#why">Почему работает</a>
+      <a href="#beforeafter">До/после</a>
+    </nav>
+
+    <main>
+      <section class="grid" aria-label="Основные блоки">
+        <!-- Тренажёр -->
+        <article class="card coach" id="coach" aria-labelledby="coach-title">
+          <h2 id="coach-title">Тренажёр • Вдох-выдох по метке</h2>
+
+          <div class="stage">
+            <div class="circle-wrap" aria-live="polite">
+              <div class="circle" id="circle" aria-label="Анимация дыхания"></div>
+              <div class="tick"><span id="count">5</span></div>
+            </div>
+            <div class="help-label" id="phaseLabel">Готово. Выберите режим и нажмите «Старт».</div>
+          </div>
+
+          <div class="controls" role="group" aria-label="Управление тренировкой">
+            <button class="go" id="startBtn">Старт</button>
+            <button class="pause" id="pauseBtn" disabled>Пауза</button>
+            <button id="focusBtn" title="Во весь экран тренажёра">Фокус-режим</button>
+
+            <div class="row">
+              <label for="mode"><strong>Режим:</strong></label>
+              <select id="mode" aria-label="Выбор режима дыхания">
+                <option value="5-5" selected>Когерентное 5-5</option>
+                <option value="4-6">ВНС релакс 4-6</option>
+                <option value="box">Box 4-4-4-4</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <label for="duration"><strong>Сессия:</strong></label>
+              <select id="duration" aria-label="Длительность сессии">
+                <option value="300">5 минут</option>
+                <option value="600" selected>10 минут</option>
+                <option value="900">15 минут</option>
+              </select>
+            </div>
+
+            <label class="row mini" style="gap:6px">
+              <input type="checkbox" id="soundToggle"> Звуковые метки
+            </label>
+
+            <div class="row mini" aria-live="polite">
+              Осталось: <strong id="left">10:00</strong> • Фаза: <strong id="phase">—</strong>
+            </div>
+
+            <div class="row" style="flex:1 1 100%; align-items:center">
+              <span class="mini" style="min-width:120px">Прогресс сессии</span>
+              <div class="meter" style="flex:1 1 auto"><i id="progress"></i></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Инструкция -->
+        <aside class="card" id="inst" aria-labelledby="inst-title">
+          <h2 id="inst-title">Короткая инструкция</h2>
+          <div class="list">
+            <div class="item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2"><path d="M12 20v-6M8 20v-4M16 20v-8M3 3h18v4H3z"/></svg>
+              <div><strong>Поза.</strong> Стопы на полу, макушка тянется вверх, плечи свободны, живот мягкий.</div>
+            </div>
+            <div class="item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M4 12s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6z"/><circle cx="12" cy="12" r="2"/></svg>
+              <div><strong>Носом.</strong> Круг расширяется — вдох; сужается — выдох. Ровно, без «добавок».</div>
+            </div>
+            <div class="item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M3 12h18M12 3v18"/></svg>
+              <div><strong>Ритм.</strong> Старт 5-5. Если «перебор» — 4-6. Box 4-4-4-4 — тренировка выносливости ритма.</div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <!-- Почему это работает -->
+      <section class="card" id="why" style="margin-top:16px" aria-labelledby="why-title">
+        <h2 id="why-title">Почему это работает</h2>
+        <p class="muted">Когерентная частота дыхания (~5–6 циклов/мин) согласует дыхательную механику, барорефлекс и вагусную регуляцию. На уровне ощущений — «ровная волна» вместо «рубленого» дыхания. Для пользователя ключ — регулярность.</p>
+        <div class="row">
+          <span class="pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2"><path d="M4 14s1-4 8-4 8 4 8 4v2H4z"/><path d="M10 10V7a2 2 0 1 1 4 0v3"/></svg>
+            ВНС баланс
+          </span>
+          <span class="pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M12 20c4-3 6-6 6-10a6 6 0 1 0-12 0c0 4 2 7 6 10z"/></svg>
+            Снижение стресса
+          </span>
+          <span class="pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M3 8h18M3 16h18"/><path d="M7 4v16M17 4v16"/></svg>
+            Сон/восстановление
+          </span>
         </div>
+      </section>
+
+      <!-- До/после -->
+      <section class="grid" id="beforeafter" style="margin-top:16px" aria-label="Практическая часть">
+        <article class="card">
+          <h2>До/после — 2 простых маркера</h2>
+          <ul>
+            <li>ЧСС: измерьте до и сразу после 10 минут (ожидаемо небольшое снижение/стабилизация).</li>
+            <li>Субъективное напряжение: шкала 0–10. Цель — минус 2–3 пункта.</li>
+          </ul>
+          <p class="mini">Если эффекта нет: уменьшите глубину вдоха, сохраните ритм или перейдите на 4-6 на 3–5 минут.</p>
+        </article>
+        <article class="card">
+          <h2>Замечания по безопасности</h2>
+          <ul>
+            <li>Головокружение → уменьшите амплитуду дыхания, сохраните ритм.</li>
+            <li>При респираторных/кардиальных симптомах — индивидуальная консультация.</li>
+          </ul>
+          <p class="mini">Метод мягкий, но дозировка — ключ.</p>
+        </article>
+      </section>
     </main>
-    
-    <!-- === ЭЛЕМЕНТЫ УПРАВЛЕНИЯ === -->
-    
-    <div class="controls">
-        <button id="sound-toggle" class="control-button">🔇</button>
-        <button id="settings-icon" class="control-button">⚙️</button>
-    </div>
 
-    <div id="settings-panel" class="settings-panel">
-        <h2>Настройки</h2>
-        <div class="setting">
-            <label for="inhale-slider">Вдох (сек): <span id="inhale-value">5</span></label>
-            <input type="range" id="inhale-slider" min="3" max="10" value="5">
-        </div>
-        <div class="setting">
-            <label for="exhale-slider">Выдох (сек): <span id="exhale-value">5</span></label>
-            <input type="range" id="exhale-slider" min="3" max="10" value="5">
-        </div>
-    </div>
+    <footer>
+      © Доктор Деев • Когерентное дыхание • Страница без внешних зависимостей (inline SVG, системные шрифты).
+    </footer>
+  </div>
 
-    <audio id="inhale-sound" src="audio/inhale.mp3" preload="auto"></audio>
-    <audio id="exhale-sound" src="audio/exhale.mp3" preload="auto"></audio>
-    
-    <script src="script.js"></script>
+  <!-- Аудиометки -->
+  <audio id="sndInhale" src="inhale.wav" preload="auto"></audio>
+  <audio id="sndExhale" src="exhale.wav" preload="auto"></audio>
 
+  <noscript>Для работы тренажёра нужен включённый JavaScript.</noscript>
 </body>
 </html>
