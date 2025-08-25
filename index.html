@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Практика Когерентного Дыхания</title>
     
-    <!-- Подключаем шрифты с Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     
-    <!-- Подключаем файл стилей -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,7 +22,33 @@
         </div>
     </main>
     
-    <!-- Подключаем файл скрипта -->
+    <!-- === НОВЫЕ ЭЛЕМЕНТЫ === -->
+    
+    <!-- 1. Иконки управления -->
+    <div class="controls">
+        <button id="sound-toggle" class="control-button">🔇</button>
+        <button id="settings-icon" class="control-button">⚙️</button>
+    </div>
+
+    <!-- 2. Панель настроек (скрыта по умолчанию) -->
+    <div id="settings-panel" class="settings-panel">
+        <h2>Настройки</h2>
+        <div class="setting">
+            <label for="inhale-slider">Вдох (сек): <span id="inhale-value">5</span></label>
+            <input type="range" id="inhale-slider" min="3" max="10" value="5">
+        </div>
+        <div class="setting">
+            <label for="exhale-slider">Выдох (сек): <span id="exhale-value">5</span></label>
+            <input type="range" id="exhale-slider" min="3" max="10" value="5">
+        </div>
+    </div>
+
+    <!-- 3. Аудио файлы -->
+    <audio id="inhale-sound" src="audio/inhale.mp3" preload="auto"></audio>
+    <audio id="exhale-sound" src="audio/exhale.mp3" preload="auto"></audio>
+
+    <!-- === КОНЕЦ НОВЫХ ЭЛЕМЕНТОВ === -->
+    
     <script src="script.js"></script>
 
 </body>
