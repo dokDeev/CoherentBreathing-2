@@ -1,9 +1,10 @@
 /* --- Основные стили и цветовая палитра --- */
 :root {
-    --bg-color: #FAF7F2; /* Кремовый фон */
-    --text-color: #5C5C5C; /* Мягкий темно-серый для текста */
-    --primary-color: #B2BBA2; /* Шалфейный зеленый для круга */
-    --accent-color: #D8C3A5; /* Теплый бежевый для тени/акцентов */
+    --bg-color: #FAF7F2;
+    --text-color: #5C5C5C;
+    --primary-color: #B2BBA2;
+    --accent-color: #D8C3A5;
+    --panel-bg-color: #f1e9dc;
     
     --font-heading: 'Cormorant Garamond', serif;
     --font-body: 'Montserrat', sans-serif;
@@ -14,18 +15,15 @@ body {
     font-family: var(--font-body);
     color: var(--text-color);
     background-color: var(--bg-color);
-    
-    /* Добавляем плавный градиент на фон для глубины */
     background-image: radial-gradient(circle at 50% 50%, #ffffff22, #f3efe7);
-    
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     text-align: center;
+    overflow: hidden; /* Предотвращает появление прокрутки из-за панели */
 }
 
-/* --- Основной контейнер --- */
 .container {
     display: flex;
     flex-direction: column;
@@ -33,30 +31,22 @@ body {
     padding: 20px;
 }
 
-/* --- Круг для дыхания --- */
 .breathing-circle {
     width: 150px;
     height: 150px;
     background-color: var(--primary-color);
     border-radius: 50%;
-    
-    /* Плавный переход для всех изменений. Длительность соответствует фазе дыхания */
+    /* Длительность перехода теперь будет управляться из JS */
     transition: all 5s ease-in-out; 
-    
-    /* Начальное состояние тени (почти невидимая) */
     box-shadow: 0 0 20px 10px rgba(216, 195, 165, 0); 
 }
 
-/* Класс, который добавляется для "вдоха" */
 .breathing-circle.grow {
     transform: scale(1.8);
-    background-color: #c9d1c0; /* Чуть светлее на вдохе */
-    
-    /* Мягкое свечение на вдохе */
+    background-color: #c9d1c0;
     box-shadow: 0 0 60px 25px rgba(216, 195, 165, 0.4); 
 }
 
-/* --- Текстовые элементы --- */
 .status {
     margin-top: 40px;
     font-size: 1.2rem;
@@ -81,4 +71,104 @@ body {
     font-size: 1rem;
     line-height: 1.7;
     margin-top: 10px;
+}
+
+/* === НОВЫЕ СТИЛИ ДЛЯ ИНТЕРФЕЙСА === */
+
+.controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.control-button {
+    background: none;
+    border: none;
+    font-size: 1.8rem; /* Размер эмодзи-иконок */
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.control-button:hover {
+    opacity: 1;
+}
+
+.settings-panel {
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    background-color: var(--panel-bg-color);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    
+    /* Скрываем панель по умолчанию */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.settings-panel.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.settings-panel h2 {
+    font-family: var(--font-heading);
+    margin-top: 0;
+    text-align: left;
+}
+
+.setting {
+    margin-bottom: 15px;
+    text-align: left;
+}
+.setting label {
+    display: block;
+    margin-bottom: 5px;
+}
+.setting input[type="range"] {
+    width: 100%;
+}
+
+
+/* === АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ === */
+
+@media (max-width: 768px) {
+    .breathing-circle {
+        width: 120px;
+        height: 120px;
+    }
+
+    .breathing-circle.grow {
+        transform: scale(1.6);
+    }
+    
+    .instructions h1 {
+        font-size: 2.2rem;
+    }
+
+    .instructions p {
+        font-size: 0.9rem;
+    }
+
+    .status {
+        font-size: 1rem;
+    }
+    
+    .controls {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .settings-panel {
+        top: 60px;
+        right: 10px;
+        left: 10px; /* Растягиваем панель на мобильных */
+    }
 }
