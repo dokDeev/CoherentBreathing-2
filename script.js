@@ -1,44 +1,37 @@
-(function(){
-  const circle=document.getElementById('breathCircle');
-  const label=document.getElementById('phaseLabel');
-  const btn=document.getElementById('toggleBtn');
-  const yearEl=document.getElementById('year');
-  if(yearEl) yearEl.textContent=new Date().getFullYear();
+// Находим нужные элементы на странице
+const circle = document.getElementById('circle');
+const status = document.getElementById('status');
 
-  const soundInhale=document.getElementById('soundInhale');
-  const soundExhale=document.getElementById('soundExhale');
-  const lungs=document.getElementById('lungs');
-  const heart=document.getElementById('heart');
+// Настройки дыхательного цикла (в миллисекундах)
+const inhaleTime = 5000; // 5 секунд на вдох
+const exhaleTime = 5000; // 5 секунд на выдох
 
-  let running=false,phase='inhale',start=0,raf;
-  const D_IN=5000,D_EX=5000,MIN=0.7,MAX=1.0;
+// Функция для одной фазы дыхания (вдох или выдох)
+function breathPhase(text, time, growClass) {
+    status.textContent = text;
+    if (growClass) {
+        circle.classList.add('grow');
+    } else {
+        circle.classList.remove('grow');
+    }
+    
+    return new Promise(resolve => setTimeout(resolve, time));
+}
 
-  function ease(t){return 0.5*(1-Math.cos(Math.PI*t));}
-  function setPhase(p){
-    phase=p;start=performance.now();
-    label.textContent=(p==='inhale'?'Вдох':'Выдох');
-    if(p==='inhale'){soundInhale.currentTime=0;soundInhale.play();}
-    else{soundExhale.currentTime=0;soundExhale.play();}
-  }
-  function frame(now){
-    const dur=(phase==='inhale'?D_IN:D_EX);
-    const t=Math.min((now-start)/dur,1);
-    const e=ease(t);
-    const s=(phase==='inhale'?MIN+(MAX-MIN)*e:MAX-(MAX-MIN)*e);
-    circle.style.transform=`scale(${s})`;
-    if(lungs) lungs.style.transform=`scale(${s})`;
-    if(heart) heart.style.transform=`scale(${0.9+0.1*e})`;
-    if(t>=1) setPhase(phase==='inhale'?'exhale':'inhale');
-    if(running) raf=requestAnimationFrame(frame);
-  }
-  function startAnim(){
-    if(running) return;
-    running=true;btn.textContent='Пауза';
-    setPhase('inhale');raf=requestAnimationFrame(frame);
-  }
-  function stopAnim(){
-    running=false;btn.textContent='Старт';
-    cancelAnimationFrame(raf);label.textContent='Пауза';
-  }
-  btn.addEventListener('click',()=>running?stopAnim():startAnim());
-})();
+// Основной цикл дыхания
+async function startBreathingCycle() {
+    // Начальная задержка перед первым вдохом
+    status.textContent = 'Приготовьтесь...';
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    while (true) {
+        // Фаза вдоха
+        await breathPhase('Вдох', inhaleTime, true);
+        
+        // Фаза выдоха
+        await breathPhase('Выдох', exhaleTime, false);
+    }
+}
+
+// Запускаем цикл дыхания после загрузки страницы
+window.addEventListener('load', startBreathingCycle);
