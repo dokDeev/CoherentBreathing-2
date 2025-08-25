@@ -1,174 +1,108 @@
-/* --- Основные стили и цветовая палитра --- */
-:root {
-    --bg-color: #FAF7F2;
-    --text-color: #5C5C5C;
-    --primary-color: #B2BBA2;
-    --accent-color: #D8C3A5;
-    --panel-bg-color: #f1e9dc;
-    
-    --font-heading: 'Cormorant Garamond', serif;
-    --font-body: 'Montserrat', sans-serif;
+:root{
+  --bg1:#e9f4ff; --bg2:#fffaf2;
+  --ink:#0f172a; --muted:#334155; --accent:#0ea5e9; --accent-2:#22c55e;
+  --card:#ffffffcc; --border:#e2e8f0; --shadow:0 10px 30px rgba(0,0,0,.08);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--ink);
+  font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Noto Sans",Arial,sans-serif;
+  background:
+    radial-gradient(1200px 1200px at 20% -10%, var(--bg1), transparent 60%),
+    radial-gradient(1200px 1200px at 120% 20%, var(--bg2), transparent 60%),
+    linear-gradient(180deg,#ffffff,#f6fbff);
+}
+.wrap{max-width:1120px; margin:0 auto; padding:24px}
+
+header.hero{
+  padding:28px; border:1px solid var(--border); border-radius:var(--radius);
+  box-shadow:var(--shadow); background:var(--card); backdrop-filter:saturate(140%) blur(6px);
+  display:grid; gap:12px; margin-top:12px;
+}
+.kicker{font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+h1{margin:0; font-weight:800; line-height:1.15; font-size:clamp(28px,3.2vw,40px)}
+.sub{color:var(--muted); max-width:68ch}
+
+.topnav{
+  position:sticky; top:8px; z-index:50;
+  display:flex; gap:8px; flex-wrap:wrap;
+  margin:12px 0 0; padding:10px;
+  background:#ffffffcc; backdrop-filter:saturate(140%) blur(6px);
+  border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow);
+}
+.topnav a{
+  text-decoration:none; color:#0b7285; border:1px solid var(--border);
+  padding:8px 10px; border-radius:10px;
+}
+.topnav a:hover{ box-shadow:0 6px 18px rgba(0,0,0,.06) }
+
+.grid{display:grid; gap:16px; grid-template-columns:1fr; margin-top:18px}
+@media (min-width:900px){ .grid{ grid-template-columns:1.15fr .85fr } }
+
+.card{
+  background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:18px;
+}
+.card h2{margin:0 0 8px; font-size:clamp(20px,2.2vw,26px)}
+.muted{color:var(--muted)} .accent{color:var(--accent)}
+.pill{display:inline-flex; align-items:center; gap:8px; border:1px solid var(--border); border-radius:999px; padding:6px 10px; background:#fff}
+.pill svg{width:18px;height:18px}
+.badge{display:inline-flex; align-items:center; gap:6px; font-size:12px; border:1px dashed #b6e3ff; padding:6px 8px; border-radius:999px; background:#f0fbff}
+
+.coach{display:grid; gap:16px}
+.stage{
+  display:grid; place-items:center; background:linear-gradient(180deg,#f8fbff,#ffffff);
+  border:1px solid var(--border); border-radius:16px; padding:18px
+}
+.circle-wrap{position:relative; width:min(340px,80vw); aspect-ratio:1/1}
+.circle{
+  position:absolute; inset:0; border-radius:50%;
+  background:radial-gradient(circle at 50% 45%, #ffffff 0%, #e6f7ff 55%, #d0f0ff 100%);
+  box-shadow: inset 0 0 40px rgba(14,165,233,.25), 0 12px 30px rgba(14,165,233,.18);
+  transform:scale(var(--scale,.75)); transition:transform ease-in-out var(--phase,5s);
+}
+.tick{position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; color:#0f172a; font-weight:700}
+.tick span{font-variant-numeric:tabular-nums; font-size:clamp(28px,4vw,40px)}
+.help-label{margin-top:8px; font-size:14px; color:var(--muted)}
+.controls{display:flex; flex-wrap:wrap; gap:8px}
+button, select{
+  border:1px solid var(--border); background:#fff; padding:10px 12px; border-radius:12px; cursor:pointer;
+  transition:transform .06s ease, box-shadow .2s ease;
+}
+button:hover{box-shadow:0 6px 18px rgba(0,0,0,.06)}
+button:active{transform:translateY(1px)}
+.go{background:linear-gradient(180deg,#eefcff,#d7f7ff); border-color:#c7eefc}
+.pause{background:linear-gradient(180deg,#fef7f7,#ffefef); border-color:#ffd7d7}
+#focusBtn{ background:linear-gradient(180deg,#eefcff,#e6fff6); border-color:#c7eefc }
+
+.good{color:var(--accent-2); font-weight:700}
+.row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.mini{font-size:13px; color:var(--muted)}
+.meter{height:10px; background:#eef2ff; border-radius:999px; overflow:hidden; border:1px solid #e5e7eb}
+.meter > i{display:block; height:100%; width:0%; background:linear-gradient(90deg, #60a5fa,#22d3ee,#34d399)}
+.list{display:grid; gap:10px}
+.list .item{display:flex; gap:10px; align-items:flex-start}
+.item svg{flex:0 0 20px}
+
+footer{margin:28px 0 16px; color:var(--muted); font-size:13px; text-align:center}
+
+/* Фокус-режим: прячем правую колонку и растягиваем тренажёр */
+body.focus .grid{ grid-template-columns:1fr }
+body.focus #inst,
+body.focus .grid > .card:not(#coach){ display:none }
+
+/* Мобильная адаптация */
+@media (max-width:540px){
+  .wrap{padding:16px}
+  .topnav{position:static}
+  .circle-wrap{width:min(88vw, 360px)}
+  .controls{gap:6px}
 }
 
-body {
-    margin: 0;
-    font-family: var(--font-body);
-    color: var(--text-color);
-    background-color: var(--bg-color);
-    background-image: radial-gradient(circle at 50% 50%, #ffffff22, #f3efe7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    text-align: center;
-    overflow: hidden; /* Предотвращает появление прокрутки из-за панели */
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-}
-
-.breathing-circle {
-    width: 150px;
-    height: 150px;
-    background-color: var(--primary-color);
-    border-radius: 50%;
-    /* Длительность перехода теперь будет управляться из JS */
-    transition: all 5s ease-in-out; 
-    box-shadow: 0 0 20px 10px rgba(216, 195, 165, 0); 
-}
-
-.breathing-circle.grow {
-    transform: scale(1.8);
-    background-color: #c9d1c0;
-    box-shadow: 0 0 60px 25px rgba(216, 195, 165, 0.4); 
-}
-
-.status {
-    margin-top: 40px;
-    font-size: 1.2rem;
-    font-weight: 300;
-    letter-spacing: 1px;
-    transition: opacity 0.5s ease;
-}
-
-.instructions {
-    margin-top: 50px;
-    max-width: 400px;
-}
-
-.instructions h1 {
-    font-family: var(--font-heading);
-    font-size: 2.8rem;
-    font-weight: 600;
-    margin: 0;
-}
-
-.instructions p {
-    font-size: 1rem;
-    line-height: 1.7;
-    margin-top: 10px;
-}
-
-/* === НОВЫЕ СТИЛИ ДЛЯ ИНТЕРФЕЙСА === */
-
-.controls {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 10px;
-}
-
-.control-button {
-    background: none;
-    border: none;
-    font-size: 1.8rem; /* Размер эмодзи-иконок */
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-}
-
-.control-button:hover {
-    opacity: 1;
-}
-
-.settings-panel {
-    position: absolute;
-    top: 80px;
-    right: 20px;
-    background-color: var(--panel-bg-color);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    
-    /* Скрываем панель по умолчанию */
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-}
-
-.settings-panel.visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.settings-panel h2 {
-    font-family: var(--font-heading);
-    margin-top: 0;
-    text-align: left;
-}
-
-.setting {
-    margin-bottom: 15px;
-    text-align: left;
-}
-.setting label {
-    display: block;
-    margin-bottom: 5px;
-}
-.setting input[type="range"] {
-    width: 100%;
-}
-
-
-/* === АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ === */
-
-@media (max-width: 768px) {
-    .breathing-circle {
-        width: 120px;
-        height: 120px;
-    }
-
-    .breathing-circle.grow {
-        transform: scale(1.6);
-    }
-    
-    .instructions h1 {
-        font-size: 2.2rem;
-    }
-
-    .instructions p {
-        font-size: 0.9rem;
-    }
-
-    .status {
-        font-size: 1rem;
-    }
-    
-    .controls {
-        top: 10px;
-        right: 10px;
-    }
-    
-    .settings-panel {
-        top: 60px;
-        right: 10px;
-        left: 10px; /* Растягиваем панель на мобильных */
-    }
+/* Уважение к reduce-motion */
+@media (prefers-reduced-motion: reduce){
+  .circle{ transition:none !important }
+  .tick span{ display:none }
 }
