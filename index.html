@@ -1,4 +1,380 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Когерентное дыхание 5:5 — тренажёр на странице</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Практика когерентного дыхания 5:5. Визуальный тренажёр на странице: анимированный круг, таймер и чек-лист. Научно обоснованный способ снизить стресс и улучшить ВНС.">
+  <link rel="canonical" href="https://dokdeev.github.io/CoherentBreathing-2/">
+  <meta property="og:title" content="Когерентное дыхание 5:5 — тренажёр">
+  <meta property="og:description" content="Анимированный тренажёр дыхания: 5:5, 4:6 и box 4-4-4-4. Инструкции, чек-лист, мягкий визуал.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#e6f3ff">
+
+  <style>
+    :root{
+      --bg1:#e9f4ff; --bg2:#fffaf2;
+      --ink:#0f172a; --muted:#475569; --accent:#0ea5e9; --accent-2:#22c55e;
+      --card:#ffffffcc; --border:#e2e8f0; --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--ink); font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Noto Sans",Arial,sans-serif;
+      background: radial-gradient(1200px 1200px at 20% -10%, var(--bg1), transparent 60%), 
+                  radial-gradient(1200px 1200px at 120% 20%, var(--bg2), transparent 60%),
+                  linear-gradient(180deg,#ffffff, #f6fbff);
+    }
+    .wrap{max-width:1120px; margin:0 auto; padding:24px}
+    header.hero{
+      padding:28px; border:1px solid var(--border); border-radius:var(--radius);
+      box-shadow:var(--shadow); background:var(--card); backdrop-filter:saturate(140%) blur(6px);
+      display:grid; gap:12px; margin-top:12px;
+    }
+    .kicker{font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+    h1{margin:0; font-weight:800; line-height:1.15; font-size:clamp(28px,3.2vw,40px)}
+    .sub{color:var(--muted); max-width:68ch}
+    .grid{display:grid; gap:16px; grid-template-columns: 1fr; margin-top:18px}
+    @media (min-width:900px){ .grid{ grid-template-columns: 1.15fr .85fr } }
+
+    .card{
+      background:white; border:1px solid var(--border); border-radius:var(--radius);
+      box-shadow:var(--shadow); padding:18px;
+    }
+    .card h2{margin:0 0 8px; font-size:clamp(20px,2.2vw,26px)}
+    .muted{color:var(--muted)} .accent{color:var(--accent)}
+    .pill{display:inline-flex; align-items:center; gap:8px; border:1px solid var(--border); border-radius:999px; padding:6px 10px; background:#fff}
+    .pill svg{width:18px;height:18px}
+
+    /* Breath coach */
+    .coach{display:grid; gap:16px}
+    .stage{
+      display:grid; place-items:center; background:linear-gradient(180deg,#f8fbff,#ffffff);
+      border:1px solid var(--border); border-radius:16px; padding:18px
+    }
+    .circle-wrap{position:relative; width:min(340px,80vw); aspect-ratio:1/1}
+    .circle{
+      position:absolute; inset:0; border-radius:50%;
+      background:radial-gradient(circle at 50% 45%, #ffffff 0%, #e6f7ff 55%, #d0f0ff 100%);
+      box-shadow: inset 0 0 40px rgba(14,165,233,.25), 0 12px 30px rgba(14,165,233,.18);
+      transform:scale(var(--scale,1)); transition:transform ease-in-out var(--phase,5s);
+    }
+    .tick{position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; color:#0ea5e9; font-weight:700}
+    .tick span{font-variant-numeric:tabular-nums; font-size:clamp(28px,4vw,40px)}
+    .help-label{margin-top:8px; font-size:14px; color:var(--muted)}
+    .controls{display:flex; flex-wrap:wrap; gap:8px}
+    button, select{
+      border:1px solid var(--border); background:#fff; padding:10px 12px; border-radius:12px; cursor:pointer;
+      transition:transform .06s ease, box-shadow .2s ease;
+    }
+    button:hover{box-shadow:0 6px 18px rgba(0,0,0,.06)}
+    button:active{transform:translateY(1px)}
+    .go{background:linear-gradient(180deg,#eefcff,#d7f7ff); border-color:#c7eefc}
+    .pause{background:linear-gradient(180deg,#fef7f7,#ffefef); border-color:#ffd7d7}
+    .good{color:var(--accent-2); font-weight:700}
+    .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .mini{font-size:13px; color:var(--muted)}
+    .meter{height:10px; background:#eef2ff; border-radius:999px; overflow:hidden; border:1px solid #e5e7eb}
+    .meter > i{display:block; height:100%; width:0%; background:linear-gradient(90deg, #60a5fa,#22d3ee,#34d399)}
+    .list{display:grid; gap:10px}
+    .list .item{display:flex; gap:10px; align-items:flex-start}
+    .item svg{flex:0 0 20px}
+    footer{
+      margin:28px 0 16px; color:var(--muted); font-size:13px; text-align:center
+    }
+    .cta{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top:10px
+    }
+    .cta a{
+      text-decoration:none; color:#0b7285; border:1px solid var(--border); background:#fff; padding:10px 12px; border-radius:12px
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:6px; font-size:12px; border:1px dashed #b6e3ff; padding:6px 8px; border-radius:999px; background:#f0fbff
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero" role="banner">
+      <div class="kicker">Практика • ВНС • Антистресс</div>
+      <h1>Когерентное дыхание 5:5 — тренажёр прямо на странице</h1>
+      <p class="sub">Мягкая визуализация, ритм 5-5 по умолчанию и две альтернативы (4-6, box 4-4-4-4). Нажмите «Старт» и следуйте кругу: расширение — вдох, сужение — выдох. Для работы и восстановления в течение дня.</p>
+      <div class="cta">
+        <span class="pill" aria-hidden="true">
+          <!-- heart icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
+          </svg>
+          ВНС-дружественно
+        </span>
+        <span class="pill" aria-hidden="true">
+          <!-- wave icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12c3 0 3-7 6-7s3 14 6 14 3-7 6-7"/>
+          </svg>
+          Ровная синусоида
+        </span>
+        <span class="badge">Без внешних скриптов • Быстрая загрузка</span>
+      </div>
+    </header>
+
+    <section class="grid" aria-label="Основные блоки">
+      <!-- ТРЕНАЖЁР -->
+      <article class="card coach" aria-labelledby="coach-title">
+        <h2 id="coach-title">Тренажёр • Вдох-выдох по метке</h2>
+
+        <div class="stage">
+          <div class="circle-wrap" aria-live="polite">
+            <div class="circle" id="circle" aria-label="Анимация дыхания"></div>
+            <div class="tick"><span id="count">5</span></div>
+          </div>
+          <div class="help-label" id="phaseLabel">Готово. Выберите режим и нажмите «Старт».</div>
+        </div>
+
+        <div class="controls" role="group" aria-label="Управление тренировкой">
+          <button class="go" id="startBtn">Старт</button>
+          <button class="pause" id="pauseBtn" disabled>Пауза</button>
+
+          <div class="row">
+            <label for="mode"><strong>Режим:</strong></label>
+            <select id="mode" aria-label="Выбор режима дыхания">
+              <option value="5-5" selected>Когерентное 5-5</option>
+              <option value="4-6">ВНС релакс 4-6</option>
+              <option value="box">Box 4-4-4-4</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <label for="duration"><strong>Сессия:</strong></label>
+            <select id="duration" aria-label="Длительность сессии">
+              <option value="300">5 минут</option>
+              <option value="600" selected>10 минут</option>
+              <option value="900">15 минут</option>
+            </select>
+          </div>
+
+          <div class="row mini" aria-live="polite">
+            Осталось: <strong id="left">10:00</strong> • Фаза: <strong id="phase">—</strong>
+          </div>
+
+          <div class="row" style="flex:1 1 100%; align-items:center">
+            <span class="mini" style="min-width:120px">Прогресс сессии</span>
+            <div class="meter" style="flex:1 1 auto"><i id="progress"></i></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ИНСТРУКЦИЯ -->
+      <aside class="card" aria-labelledby="inst-title">
+        <h2 id="inst-title">Короткая инструкция</h2>
+        <div class="list">
+          <div class="item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2"><path d="M12 20v-6M8 20v-4M16 20v-8M3 3h18v4H3z"/></svg>
+            <div>
+              <strong>Поза.</strong> Сядьте удобно, стопы на полу, макушка тянется вверх. Плечи свободны, живот мягкий.
+            </div>
+          </div>
+          <div class="item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M4 12s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6z"/><circle cx="12" cy="12" r="2"/></svg>
+            <div>
+              <strong>Вдох/выдох носом.</strong> Следите за кругом: расширение — вдох, сужение — выдох. Ровно, без «добавок».
+            </div>
+          </div>
+          <div class="item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M3 12h18M12 3v18"/></svg>
+            <div>
+              <strong>Ритм.</strong> Начните с 5-5. Если «перебор» — перейдите на 4-6. Box 4-4-4-4 — для тренировки выносливости ритма.
+            </div>
+          </div>
+          <div class="item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H7l-4-4V5a2 2 0 0 1 2-2h10"/></svg>
+            <div>
+              <strong>Чек-лист.</strong> 1) темп речи снизился; 2) плечи опустились; 3) субъективное напряжение ↓. Если да — идёте верно.
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ПОЧЕМУ ЭТО РАБОТАЕТ -->
+    <section class="card" style="margin-top:16px" aria-labelledby="why-title">
+      <h2 id="why-title">Почему это работает</h2>
+      <p class="muted">Когерентная частота дыхания (~5–6 циклов/мин) согласует дыхательную механику, барорефлекс и вагусную регуляцию. На уровне ощущений — «ровная волна» вместо «рубленого» дыхания. Для потребителя важен не героизм, а регулярность.</p>
+      <div class="row">
+        <span class="pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2"><path d="M4 14s1-4 8-4 8 4 8 4v2H4z"/><path d="M10 10V7a2 2 0 1 1 4 0v3"/></svg>
+          ВНС баланс
+        </span>
+        <span class="pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M12 20c4-3 6-6 6-10a6 6 0 1 0-12 0c0 4 2 7 6 10z"/></svg>
+          Снижение стресса
+        </span>
+        <span class="pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M3 8h18M3 16h18"/><path d="M7 4v16M17 4v16"/></svg>
+          Сон/восстановление
+        </span>
+      </div>
+    </section>
+
+    <!-- ДО/ПОСЛЕ -->
+    <section class="grid" style="margin-top:16px" aria-label="Практическая часть">
+      <article class="card">
+        <h2>До/после — 2 простых маркера</h2>
+        <ul>
+          <li>ЧСС: измерьте до и сразу после 10 минут (ожидаемо небольшое снижение/стабилизация).</li>
+          <li>Субъективное напряжение: шкала 0–10. Цель — минус 2–3 пункта.</li>
+        </ul>
+        <p class="mini">Если эффект не ощущается, сократите глубину вдоха, оставьте ритм, или перейдите на 4-6 на 3–5 минут.</p>
+      </article>
+      <article class="card">
+        <h2>Замечания по безопасности</h2>
+        <ul>
+          <li>Головокружение → уменьшите амплитуду дыхания, сохраните ритм.</li>
+          <li>При респираторных/кардиальных симптомах — индивидуальная консультация.</li>
+        </ul>
+        <p class="mini">Метод мягкий, но дозировка — ключ.</p>
+      </article>
+    </section>
+
+    <footer>
+      © Доктор Деев • Когерентное дыхание • Этот файл автономен (inline CSS/JS, SVG, без внешних зависимостей).
+    </footer>
+  </div>
+
+  <script>
+    (() => {
+      const circle = document.getElementById('circle');
+      const count  = document.getElementById('count');
+      const left   = document.getElementById('left');
+      const progress = document.getElementById('progress');
+      const phaseEl  = document.getElementById('phase');
+      const phaseLabel = document.getElementById('phaseLabel');
+
+      const modeSel = document.getElementById('mode');
+      const durSel  = document.getElementById('duration');
+      const startBtn= document.getElementById('startBtn');
+      const pauseBtn= document.getElementById('pauseBtn');
+
+      let running=false, paused=false, tStart=0, tPaused=0, total=600, raf, seq=[], idx=0, phase="—";
+
+      function fmt(sec){
+        const m = Math.floor(sec/60), s = Math.max(0, Math.floor(sec%60));
+        return `${m}:${s.toString().padStart(2,'0')}`;
+      }
+
+      function buildSequence(mode){
+        if(mode==='5-5') return [{p:'Вдох',s:5},{p:'Выдох',s:5}];
+        if(mode==='4-6') return [{p:'Вдох',s:4},{p:'Выдох',s:6}];
+        // box 4-4-4-4
+        return [{p:'Вдох',s:4},{p:'Задержка',s:4},{p:'Выдох',s:4},{p:'Пауза',s:4}];
+      }
+
+      function applyPhase(p, seconds){
+        phase = p; phaseEl.textContent = p;
+        phaseLabel.textContent = (p==='Вдох'?'Расширение круга — вдох':'Сужение круга — выдох/пауза');
+        const scale = (p==='Вдох')? 1.0 : 0.75;
+        circle.style.setProperty('--phase', seconds+'s');
+        circle.style.setProperty('--scale', scale);
+        // обратный отсчёт цифрами в центре
+        let rem = seconds;
+        count.textContent = rem;
+        const tick = () => {
+          if(!running || paused) return;
+          rem -= 1;
+          if(rem >= 0) { count.textContent = rem; setTimeout(tick, 1000); }
+        };
+        setTimeout(() => { if(running && !paused) tick(); }, 1000);
+      }
+
+      function loop(){
+        if(!running){ cancelAnimationFrame(raf); return; }
+        const now = performance.now();
+        const elapsed = (now - tStart) / 1000; // s
+        const remain = Math.max(0, total - elapsed);
+        left.textContent = fmt(remain);
+        const donePct = 100 * (elapsed / total);
+        progress.style.width = Math.max(0, Math.min(100, donePct)) + '%';
+
+        // если фаза закончилась — переключаемся
+        if(!phaseEndAt || now >= phaseEndAt){
+          const step = seq[idx % seq.length];
+          idx++;
+          applyPhase(step.p, step.s);
+          phaseEndAt = now + step.s * 1000;
+        }
+        if(remain <= 0){
+          stop();
+          phaseEl.textContent = 'Готово';
+          phaseLabel.textContent = 'Сессия завершена. Отметьте ощущения и ЧСС.';
+          return;
+        }
+        raf = requestAnimationFrame(loop);
+      }
+
+      function start(){
+        total = parseInt(durSel.value, 10);
+        seq   = buildSequence(modeSel.value);
+        idx   = 0;
+        tStart = performance.now();
+        running = true; paused = false; pauseBtn.disabled=false; startBtn.disabled=true;
+        phaseEl.textContent='—';
+        phaseEndAt = 0;
+        loop();
+      }
+      function stop(){
+        running=false; paused=false; startBtn.disabled=false; pauseBtn.disabled=true;
+        cancelAnimationFrame(raf);
+      }
+      function togglePause(){
+        if(!running) return;
+        if(!paused){
+          paused = true; tPaused = performance.now();
+          pauseBtn.textContent='Продолжить';
+          phaseLabel.textContent='Пауза: сделайте мягкий обычный вдох-выдох.';
+          cancelAnimationFrame(raf);
+        }else{
+          const delta = performance.now() - tPaused;
+          tStart += delta; phaseEndAt += delta; // сдвигаем тайминг
+          paused = false; pauseBtn.textContent='Пауза';
+          loop();
+        }
+      }
+
+      let phaseEndAt = 0;
+      // UI
+      startBtn.addEventListener('click', start);
+      pauseBtn.addEventListener('click', togglePause);
+      modeSel.addEventListener('change', ()=> {
+        if(!running){ phaseLabel.textContent='Режим выбран. Нажмите «Старт».';
+        } else { // мягкое переключение режима на лету
+          const elapsed = (performance.now() - tStart)/1000;
+          tStart = performance.now() - elapsed;
+          seq = buildSequence(modeSel.value);
+          idx = 0; phaseEndAt = 0;
+        }
+      });
+      durSel.addEventListener('change', ()=> { if(!running) left.textContent = fmt(parseInt(durSel.value,10)); });
+
+      // начальное состояние
+      left.textContent = fmt(parseInt(durSel.value,10));
+      circle.style.setProperty('--scale', .75);
+    })();
+  </script>
+
+  <!-- Структурированные данные: WebPage -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"Когерентное дыхание 5:5 — тренажёр",
+    "description":"Визуальный тренажёр когерентного дыхания: 5:5, 4:6 и box 4-4-4-4. Без внешних зависимостей.",
+    "inLanguage":"ru",
+    "publisher":{"@type":"Organization","name":"Доктор Деев"}
+  }
+  </script>
+</body>
+</html>!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
